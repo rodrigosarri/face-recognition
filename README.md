@@ -44,10 +44,10 @@ python face_rec.py
 Abaixo é possível visualizar "antes e depois" da classificação de rosto.
 
 **Antes**
-![alt text](https://github.com/rodrigosarri/face-recognition/blob/main/tests/donald-trump.jpg?raw=true)
+![alt text](https://github.com/rodrigosarri/face-recognition/blob/main/tests/obama.jpg?raw=true)
 
 **Depois**
-![alt text](https://github.com/rodrigosarri/face-recognition/blob/main/results/donald-trump.jpg?raw=true)
+![alt text](https://github.com/rodrigosarri/face-recognition/blob/main/results/obama.jpg?raw=true)
 
 
 ## Contribuindo

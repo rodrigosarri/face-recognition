@@ -67,15 +67,8 @@ def classifyFace(im):
     cv2.imwrite("results/" + im.split(".")[0] + '.jpg', img)
 
 def generateTests():
-    tests = [
-        "donald-trump.jpg",
-        "bill-gates.jpg",
-        "elon-musk.jpg",
-        "jeff-bezos.jpg",
-        "obama.jpg",
-    ]
-
-    for test in tests:
-        classifyFace(test)
+    for dirpath, dnames, fnames in os.walk("./tests"):
+        for f in fnames:
+            classifyFace(f)
 
 generateTests()

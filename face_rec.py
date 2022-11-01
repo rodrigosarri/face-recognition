@@ -56,14 +56,6 @@ def classifyFace(im):
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(img, name, (left -20, bottom + 15), font, 1.0, (255, 255, 255), 2)
 
-
-    """
-    while True:
-        cv2.imshow('Resultado', img)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            return faceNames
-    """
-
     cv2.imwrite("results/" + im.split(".")[0] + '.jpg', img)
 
 def generateTests():

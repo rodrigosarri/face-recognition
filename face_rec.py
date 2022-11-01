@@ -4,7 +4,7 @@ import cv2
 import face_recognition
 import numpy as np
 
-def get_encoded_faces():
+def getEncodedFaces():
     """
     Na pasta faces são coloca as imagens com os respectivos nomes ao qual aquele rosto pertence
     """
@@ -20,33 +20,34 @@ def get_encoded_faces():
     return encoded
 
 
-def classify_face(im):
-    faces = get_encoded_faces()
-    faces_encoded = list(faces.values())
-    known_face_names = list(faces.keys())
+def classifyFace(im):
+    faces = getEncodedFaces()
+    facesEncoded = list(faces.values())
+    knownFaceNames = list(faces.keys())
+    testFolder = "tests/"
 
-    img = cv2.imread(im, 1)
+    img = cv2.imread(testFolder + im, 1)
     #img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
     #img = img[:,:,::-1]
 
     face_locations = face_recognition.face_locations(img)
-    unknown_face_encodings = face_recognition.face_encodings(img, face_locations)
+    unknownFaceEncodings = face_recognition.face_encodings(img, face_locations)
 
-    face_names = []
-    for face_encoding in unknown_face_encodings:
+    faceNames = []
+    for face_encoding in unknownFaceEncodings:
         # Se não encontrar o rosto retorna como ?????
-        matches = face_recognition.compare_faces(faces_encoded, face_encoding)
+        matches = face_recognition.compare_faces(facesEncoded, face_encoding)
         name = "?????"
 
         # Se encontrar, é atribuido o nome no rosto
-        face_distances = face_recognition.face_distance(faces_encoded, face_encoding)
-        best_match_index = np.argmin(face_distances)
-        if matches[best_match_index]:
-            name = known_face_names[best_match_index]
+        faceDistances = face_recognition.face_distance(facesEncoded, face_encoding)
+        bestMatchIndex = np.argmin(faceDistances)
+        if matches[bestMatchIndex]:
+            name = knownFaceNames[bestMatchIndex]
 
-        face_names.append(name)
+        faceNames.append(name)
 
-        for (top, right, bottom, left), name in zip(face_locations, face_names):
+        for (top, right, bottom, left), name in zip(face_locations, faceNames):
             # Desenhando o retângulo
             cv2.rectangle(img, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
 
@@ -60,9 +61,21 @@ def classify_face(im):
     while True:
         cv2.imshow('Resultado', img)
         if cv2.waitKey(1) & 0xFF == ord('q'):
-            return face_names
+            return faceNames
     """
 
-    cv2.imwrite("resultado.jpg", img)
+    cv2.imwrite("results/" + im.split(".")[0] + '.jpg', img)
 
-classify_face("test.jpg")
+def generateTests():
+    tests = [
+        "donald-trump.jpg",
+        "bill-gates.jpg",
+        "elon-musk.jpg",
+        "jeff-bezos.jpg",
+        "obama.jpg",
+    ]
+
+    for test in tests:
+        classifyFace(test)
+
+generateTests()
